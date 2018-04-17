@@ -43,7 +43,7 @@ namespace Exline.Framework.Data.InMemory.Repositories
         
         public virtual async Task<bool> UpdateOneAsync(TDocument model)
         {
-            await DeleteAsync(model);
+            await DeleteByIdAsync(model.Id);
             DBContext
                 .GetCollection<TDocument,TPrimaryKey>()
                 .Add(model);
@@ -94,6 +94,12 @@ namespace Exline.Framework.Data.InMemory.Repositories
             return DBContext.GetCollection<TDocument,TPrimaryKey>()
                 .AsQueryable()
                 .FirstOrDefault(x=>x.Id.ToString()==id.ToString());
+        }
+
+        public virtual async Task TruncateAsync()
+        {
+            DBContext.GetCollection<TDocument,TPrimaryKey>()
+                .Clear();
         }
     }
 }

@@ -23,5 +23,6 @@ namespace Exline.Framework.Data.Repositories
         Task<int> CountAsync();
         Task<int> CountAsync(Expression<Func<TDocument, bool>> predicate);
         Task<TDocument> GetByIdAsync(TPrimaryKey id);
+        Task TruncateAsync();
     }
 }
