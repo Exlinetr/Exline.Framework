@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Exline.Framework.Data.InMemory
 {
-    public static class Extentions
+    public static class Extensions
     {
         public static IServiceCollection UseInMemoryDB(this IServiceCollection services)
         {
