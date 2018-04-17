@@ -43,7 +43,7 @@ namespace Exline.Framework.Data.InMemory.Repositories
         
         public virtual async Task<bool> UpdateOneAsync(TDocument model)
         {
-            await DeleteAsync(model);
+            await DeleteByIdAsync(model.Id);
             DBContext
                 .GetCollection<TDocument,TPrimaryKey>()
                 .Add(model);
