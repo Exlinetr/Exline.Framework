@@ -96,5 +96,10 @@ namespace Exline.Framework.Data.MongoDB.Repositories
                 .FindAsync<TDocument>(query).Result.FirstOrDefaultAsync();
             
         }
+
+        public virtual async Task TruncateAsync()
+        {
+            await DBContext.Database.DropCollectionAsync(((BaseDBContext)DBContext).GetCollectionName(typeof(TDocument),null));
+        }
     }
 }

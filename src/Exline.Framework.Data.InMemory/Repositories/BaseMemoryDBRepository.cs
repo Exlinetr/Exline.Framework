@@ -95,5 +95,11 @@ namespace Exline.Framework.Data.InMemory.Repositories
                 .AsQueryable()
                 .FirstOrDefault(x=>x.Id.ToString()==id.ToString());
         }
+
+        public virtual async Task TruncateAsync()
+        {
+            DBContext.GetCollection<TDocument,TPrimaryKey>()
+                .Clear();
+        }
     }
 }
