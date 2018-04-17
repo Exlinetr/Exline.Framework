@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using MongoDB.Driver;
 
 namespace Exline.Framework.Data.MongoDB
@@ -20,6 +21,13 @@ namespace Exline.Framework.Data.MongoDB
         public IMongoClient Client {get;}
 
         public IMongoDatabase Database {get;}
+
+        public override async Task DropAsync()
+        {
+            if(Database is null)
+                throw new NullReferenceException(nameof(Database));
+            await Client.DropDatabaseAsync(_contextConfig.DatabaseName);
+        }
 
         public IMongoCollection<TDocument> GetCollection<TDocument,TPrimaryKey>(string collectionName=null)
             where TDocument:class,IDocument<TPrimaryKey>

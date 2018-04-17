@@ -24,5 +24,6 @@ namespace Exline.Framework.Data
                 name=type.Name;
             return name; 
         }
+        public abstract Task DropAsync();
     }
 }
