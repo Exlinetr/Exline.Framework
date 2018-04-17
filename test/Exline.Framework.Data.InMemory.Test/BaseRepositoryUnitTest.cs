@@ -5,17 +5,22 @@ using Xunit;
 
 namespace Exline.Framework.Data.InMemory.Test
 {
-    public class BaseRepositoryUnitTest
+    public class BaseRepositoryUnitTest : IDisposable
     {
+        private readonly IServiceCollection _services;
+        private readonly IServiceProvider _serviceProvider;
         private readonly IProductRepository _productRepository;
         public BaseRepositoryUnitTest()
         {
-            IServiceCollection services = new ServiceCollection();
-            services.UseInMemoryDB();
-            services.AddSingleton<IProductRepository,ProductRepository>();
+            _services= new ServiceCollection();
 
-            _productRepository = services
-                                .BuildServiceProvider()
+            _services.UseInMemoryDB();
+
+            _services.AddSingleton<IProductRepository,ProductRepository>();
+
+            _serviceProvider=_services.BuildServiceProvider();
+
+            _productRepository = _serviceProvider
                                 .GetService<IProductRepository>();
         }
 
@@ -36,6 +41,37 @@ namespace Exline.Framework.Data.InMemory.Test
                 Assert.Equal(product.Id,dbProduct.Id);
                 Assert.Equal(product.Price,dbProduct.Price);
                 Assert.Equal(product.Title,dbProduct.Title);
+            }).GetAwaiter().GetResult();
+        }
+
+             [Fact]
+        public void UpdateOneAsync()
+        {
+            Task.Run(async()=>{
+
+                ProductDocument product=new ProductDocument(){
+                    Id=1,
+                    Price=5,
+                    Title="1Core 1GB VPS"
+                };
+
+                ProductDocument modifiedProduct=new ProductDocument(){
+                    Id=1,
+                    Price=10,
+                    Title="2Core 1GB VPS"
+                };
+
+                await _productRepository.AddOneAsync(product);
+                await _productRepository.UpdateOneAsync(modifiedProduct);
+
+                ProductDocument dbProduct = await _productRepository.GetByIdAsync(product.Id);
+
+                Assert.NotNull(dbProduct);
+                Assert.Equal(modifiedProduct,dbProduct);
+                Assert.Equal(modifiedProduct.Id,dbProduct.Id);
+                Assert.Equal(modifiedProduct.Price,dbProduct.Price);
+                Assert.Equal(modifiedProduct.Title,dbProduct.Title);
+
             }).GetAwaiter().GetResult();
         }
 
@@ -73,6 +109,10 @@ namespace Exline.Framework.Data.InMemory.Test
             }).GetAwaiter().GetResult();
         }
 
-        
+        public void Dispose()
+        {
+            _productRepository.TruncateAsync();
+            _serviceProvider.GetService<IMemoryDBContext>().DropAsync();
+        }
     }
 }
