@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Exline.Framework.Data
 {
@@ -7,18 +8,21 @@ namespace Exline.Framework.Data
         : IDBContext
     {
 
-        protected string GetCollectionName(Type type,string collectionName)
+        public string GetCollectionName(Type type,string collectionName)
         {
             if(string.IsNullOrEmpty(collectionName))
                 collectionName=GetAttributeCollectionName(type);
             return collectionName;
         }
 
-        protected string GetAttributeCollectionName(Type type)
+        public string GetAttributeCollectionName(Type type)
         {
-            return (type
+            string name = (type
                 .GetCustomAttributes(typeof(CollectionNameAttribute),false)
                 .FirstOrDefault() as CollectionNameAttribute)?.Name;
+            if(string.IsNullOrEmpty(name))
+                name=type.Name;
+            return name; 
         }
     }
 }
