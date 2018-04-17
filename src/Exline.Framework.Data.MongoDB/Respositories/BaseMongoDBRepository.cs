@@ -24,6 +24,7 @@ namespace Exline.Framework.Data.MongoDB.Repositories
     public abstract class BaseMongoDBRepository<TDocument,TPrimaryKey,Context>
         : IRepository<TDocument,TPrimaryKey> 
             where TDocument : class , IDocument<TPrimaryKey>, new()
+            where TPrimaryKey : class
             where Context: IMongoDBContext
     {
         protected IMongoDBContext DBContext{get;private set;}
@@ -48,7 +49,7 @@ namespace Exline.Framework.Data.MongoDB.Repositories
         {
             return (await DBContext
                 .GetCollection<TDocument,TPrimaryKey>()
-                .ReplaceOneAsync(x=>x.Id.ToString()==model.Id.ToString(),model)).ModifiedCount==1;
+                .ReplaceOneAsync(x=>x.Id==model.Id,model)).ModifiedCount==1;
         }
 
         #endregion
@@ -57,7 +58,7 @@ namespace Exline.Framework.Data.MongoDB.Repositories
         {
             return int.Parse((await DBContext
                 .GetCollection<TDocument,TPrimaryKey>()
-                .DeleteManyAsync(x=>x.Id.ToString()==model.Id.ToString())).DeletedCount.ToString());
+                .DeleteManyAsync(x=>x.Id==model.Id)).DeletedCount.ToString());
         }
         
         public Task<int> DeleteByIdAsync(TPrimaryKey id)
