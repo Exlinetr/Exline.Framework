@@ -8,7 +8,6 @@ namespace Exline.Framework.Data.InMemory.Test
         public MemoryDBUnitTest()
         {
            
-
         }
 
         [Fact]
@@ -16,7 +15,7 @@ namespace Exline.Framework.Data.InMemory.Test
         {   
             IServiceCollection services = new ServiceCollection();
             services.UseInMemoryDB();
-            MemoryDBContext dBContext=(MemoryDBContext)services.BuildServiceProvider().GetService<IMemoryDBContext>();
+            IMemoryDBContext dBContext=services.BuildServiceProvider().GetService<IMemoryDBContext>();
             Assert.NotNull(dBContext);
         }
     }

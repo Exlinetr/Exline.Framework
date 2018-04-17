@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Exline.Framework.Data.InMemory
 {
@@ -11,6 +12,11 @@ namespace Exline.Framework.Data.InMemory
         public MemoryDBContext()
         {
             _database=new MemoryDatabase();
+        }
+
+        public override async Task DropAsync()
+        {
+            _database.Drop();
         }
 
         public IList<TDocument> GetCollection<TDocument, TPrimaryKey>()

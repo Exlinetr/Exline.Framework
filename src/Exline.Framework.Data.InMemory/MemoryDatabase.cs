@@ -29,5 +29,10 @@ namespace Exline.Framework.Data.InMemory
             }
         }
 
+        public void Drop()
+        {
+            _tables.Clear();
+        }
+
     }
 }
