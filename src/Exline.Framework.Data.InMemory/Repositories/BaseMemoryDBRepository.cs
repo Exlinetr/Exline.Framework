@@ -61,11 +61,13 @@ namespace Exline.Framework.Data.InMemory.Repositories
             return 1;
         }
         
-        public Task<int> DeleteByIdAsync(TPrimaryKey id)
+        public virtual async Task<int> DeleteByIdAsync(TPrimaryKey id)
         {
-            return DeleteAsync(new TDocument(){
-                Id=id
-            });
+            TDocument document=DBContext.GetCollection<TDocument,TPrimaryKey>().Single(x=>x.Id.ToString()==id.ToString());
+            if(document!=null){
+                 return await DeleteAsync(document);
+            }
+            return -1;
         }
 
 
