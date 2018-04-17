@@ -9,5 +9,8 @@ namespace Exline.Framework.Data
         int Port{get;set;}
 
         string ToConnectionString();
+        void SetServerInfo(string host,int port,string dbName);
+        void SetServerInfo(string host,string dbName);
+        void SetCredential(string username,string password);
     }
 }
