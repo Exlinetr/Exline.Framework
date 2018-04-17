@@ -8,7 +8,7 @@ namespace Exline.Framework.Data.InMemory
         : IDBContext
     {
         
-        IQueryable<TDocument> GetCollection<TDocument,TPrimaryKey>() 
+        IList<TDocument> GetCollection<TDocument,TPrimaryKey>() 
              where TDocument:class,IDocument<TPrimaryKey>;
     }
 }

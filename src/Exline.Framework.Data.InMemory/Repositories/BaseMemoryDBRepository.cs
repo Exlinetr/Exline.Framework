@@ -33,7 +33,6 @@ namespace Exline.Framework.Data.InMemory.Repositories
         {
             DBContext
                 .GetCollection<TDocument,TPrimaryKey>()
-                .ToList()
                 .Add(model);
            return model;
         }
@@ -47,7 +46,6 @@ namespace Exline.Framework.Data.InMemory.Repositories
             await DeleteAsync(model);
             DBContext
                 .GetCollection<TDocument,TPrimaryKey>()
-                .ToList()
                 .Add(model);
             return true;
         }
@@ -57,10 +55,8 @@ namespace Exline.Framework.Data.InMemory.Repositories
         public virtual async Task<int> DeleteAsync(TDocument model)
         {
             int index=DBContext.GetCollection<TDocument,TPrimaryKey>()
-                .ToList()
                 .IndexOf(model);
             DBContext.GetCollection<TDocument,TPrimaryKey>()
-                .ToList()
                 .RemoveAt(index);
             return 1;
         }
@@ -76,21 +72,25 @@ namespace Exline.Framework.Data.InMemory.Repositories
         public virtual async Task<bool> ExistsAsync(Expression<Func<TDocument, bool>> predicate)
         {
             return DBContext.GetCollection<TDocument,TPrimaryKey>()
+                .AsQueryable()
                 .Any(predicate);
         }
         public virtual async Task<int> CountAsync()
         {
             return DBContext.GetCollection<TDocument,TPrimaryKey>()
+                .AsQueryable()
                 .Count();
         }
         public virtual async Task<int> CountAsync(Expression<Func<TDocument, bool>> predicate)
         {
             return DBContext.GetCollection<TDocument,TPrimaryKey>()
+                .AsQueryable()
                 .Count(predicate);
         }
         public virtual async  Task<TDocument> GetByIdAsync(TPrimaryKey id)
         {
             return DBContext.GetCollection<TDocument,TPrimaryKey>()
+                .AsQueryable()
                 .FirstOrDefault(x=>x.Id.ToString()==id.ToString());
         }
     }

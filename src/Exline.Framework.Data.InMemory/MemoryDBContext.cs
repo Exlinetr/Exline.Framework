@@ -13,10 +13,10 @@ namespace Exline.Framework.Data.InMemory
             _database=new MemoryDatabase();
         }
 
-        public IQueryable<TDocument> GetCollection<TDocument, TPrimaryKey>()
+        public IList<TDocument> GetCollection<TDocument, TPrimaryKey>()
             where TDocument:class,IDocument<TPrimaryKey>
         {
-            return _database.Set<TDocument>().AsQueryable();
+            return _database.Set<TDocument>();
         }
     }
 }
