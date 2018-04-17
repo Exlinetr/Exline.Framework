@@ -4,12 +4,13 @@ using MongoDB.Driver;
 namespace Exline.Framework.Data.MongoDB
 {
     public interface IMongoDBContext
+        : IDBContext
     {
         IMongoClient Client{get;}
         IMongoDatabase Database{get;}
 
-        IMongoCollection<TEntity> GetCollection<TEntity,TPrimaryKey>(string collectionName=null) 
-             where TEntity:class,IDocument<TPrimaryKey>;
+        IMongoCollection<TDocument> GetCollection<TDocument,TPrimaryKey>(string collectionName=null) 
+             where TDocument:class,IDocument<TPrimaryKey>;
 
     }
 }

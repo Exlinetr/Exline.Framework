@@ -4,24 +4,24 @@ using System.Threading.Tasks;
 
 namespace Exline.Framework.Data.Repositories
 {
-    public interface IRepository<TEntity>
-        :IRepository<TEntity,int>
-        where TEntity:class, IDocument<int>, new()
+    public interface IRepository<TDocument>
+        :IRepository<TDocument,int>
+        where TDocument:class, IDocument<int>, new()
     {
         
     }
     
-    public interface IRepository<TEntity,TPrimaryKey>
-        where TEntity:class, IDocument<TPrimaryKey>, new()
+    public interface IRepository<TDocument,TPrimaryKey>
+        where TDocument:class, IDocument<TPrimaryKey>, new()
             
     {
-        Task<TEntity> AddOneAsync(TEntity model);
-        Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate);
-        Task<bool> UpdateOneAsync(TEntity model);
-        Task<int> DeleteAsync(TEntity model);
+        Task<TDocument> AddOneAsync(TDocument model);
+        Task<bool> ExistsAsync(Expression<Func<TDocument, bool>> predicate);
+        Task<bool> UpdateOneAsync(TDocument model);
+        Task<int> DeleteAsync(TDocument model);
         Task<int> DeleteByIdAsync(TPrimaryKey id);
         Task<int> CountAsync();
-        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
-        Task<TEntity> GetByIdAsync(TPrimaryKey id);
+        Task<int> CountAsync(Expression<Func<TDocument, bool>> predicate);
+        Task<TDocument> GetByIdAsync(TPrimaryKey id);
     }
 }

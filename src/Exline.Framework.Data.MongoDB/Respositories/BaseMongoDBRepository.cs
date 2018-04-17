@@ -9,9 +9,9 @@ using Exline.Framework.Data.Repositories;
 
 namespace Exline.Framework.Data.MongoDB.Repositories
 {
-    public abstract class BaseMongoDBRepository<TEntity, Context>
-        : BaseMongoDBRepository<TEntity, string, Context>
-            where TEntity : class , IDocument<string>, new()
+    public abstract class BaseMongoDBRepository<TDocument, Context>
+        : BaseMongoDBRepository<TDocument, string, Context>
+            where TDocument : class , IDocument<string>, new()
             where Context: IMongoDBContext
     {
         public BaseMongoDBRepository(IMongoDBContext dbContext) 
@@ -21,9 +21,9 @@ namespace Exline.Framework.Data.MongoDB.Repositories
         }
     }
 
-    public abstract class BaseMongoDBRepository<TEntity,TPrimaryKey,Context>
-        : IRepository<TEntity,TPrimaryKey> 
-            where TEntity : class , IDocument<TPrimaryKey>, new()
+    public abstract class BaseMongoDBRepository<TDocument,TPrimaryKey,Context>
+        : IRepository<TDocument,TPrimaryKey> 
+            where TDocument : class , IDocument<TPrimaryKey>, new()
             where Context: IMongoDBContext
     {
         protected IMongoDBContext DBContext{get;private set;}
@@ -33,9 +33,9 @@ namespace Exline.Framework.Data.MongoDB.Repositories
         }
         #region insert
         
-        public virtual async Task<TEntity> AddOneAsync(TEntity model)
+        public virtual async Task<TDocument> AddOneAsync(TDocument model)
         {
-           await DBContext.GetCollection<TEntity,TPrimaryKey>()
+           await DBContext.GetCollection<TDocument,TPrimaryKey>()
             .InsertOneAsync(model);
            return model;
         }
@@ -44,55 +44,55 @@ namespace Exline.Framework.Data.MongoDB.Repositories
 
         #region update
         
-        public virtual async Task<bool> UpdateOneAsync(TEntity model)
+        public virtual async Task<bool> UpdateOneAsync(TDocument model)
         {
             return (await DBContext
-                .GetCollection<TEntity,TPrimaryKey>()
+                .GetCollection<TDocument,TPrimaryKey>()
                 .ReplaceOneAsync(x=>x.Id.ToString()==model.Id.ToString(),model)).ModifiedCount==1;
         }
 
         #endregion
 
-        public virtual async Task<int> DeleteAsync(TEntity model)
+        public virtual async Task<int> DeleteAsync(TDocument model)
         {
             return int.Parse((await DBContext
-                .GetCollection<TEntity,TPrimaryKey>()
+                .GetCollection<TDocument,TPrimaryKey>()
                 .DeleteManyAsync(x=>x.Id.ToString()==model.Id.ToString())).DeletedCount.ToString());
         }
         
         public Task<int> DeleteByIdAsync(TPrimaryKey id)
         {
-            return DeleteAsync(new TEntity(){
+            return DeleteAsync(new TDocument(){
                 Id=id
             });
         }
 
 
-        public virtual async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<bool> ExistsAsync(Expression<Func<TDocument, bool>> predicate)
         {
-            return (await DBContext.GetCollection<TEntity,TPrimaryKey>()
+            return (await DBContext.GetCollection<TDocument,TPrimaryKey>()
                 .AsQueryable()
                     .AnyAsync(predicate));
         }
         public virtual async Task<int> CountAsync()
         {
-            return (await DBContext.GetCollection<TEntity,TPrimaryKey>()
+            return (await DBContext.GetCollection<TDocument,TPrimaryKey>()
                 .AsQueryable()
                 .CountAsync());
         }
-        public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<int> CountAsync(Expression<Func<TDocument, bool>> predicate)
         {
-            return (await DBContext.GetCollection<TEntity,TPrimaryKey>()
+            return (await DBContext.GetCollection<TDocument,TPrimaryKey>()
                 .AsQueryable()
                 .CountAsync(predicate));
         }
-        public virtual async  Task<TEntity> GetByIdAsync(TPrimaryKey id)
+        public virtual async  Task<TDocument> GetByIdAsync(TPrimaryKey id)
         {
-            var query = new global::MongoDB.Driver.FilterDefinitionBuilder<TEntity>()
+            var query = new global::MongoDB.Driver.FilterDefinitionBuilder<TDocument>()
                 .Eq(x=>x.Id,id);
             return await DBContext
-                .GetCollection<TEntity,TPrimaryKey>()
-                .FindAsync<TEntity>(query).Result.FirstOrDefaultAsync();
+                .GetCollection<TDocument,TPrimaryKey>()
+                .FindAsync<TDocument>(query).Result.FirstOrDefaultAsync();
             
         }
     }

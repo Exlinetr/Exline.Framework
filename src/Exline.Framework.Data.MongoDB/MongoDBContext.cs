@@ -21,12 +21,12 @@ namespace Exline.Framework.Data.MongoDB
 
         public IMongoDatabase Database {get;}
 
-        public IMongoCollection<TEntity> GetCollection<TEntity,TPrimaryKey>(string collectionName=null)
-            where TEntity:class,IDocument<TPrimaryKey>
+        public IMongoCollection<TDocument> GetCollection<TDocument,TPrimaryKey>(string collectionName=null)
+            where TDocument:class,IDocument<TPrimaryKey>
         {
             if(Database is null)
                 throw new NullReferenceException(nameof(Database));
-            return Database.GetCollection<TEntity>(GetCollectionName(typeof(TEntity),collectionName));
+            return Database.GetCollection<TDocument>(GetCollectionName(typeof(TDocument),collectionName));
         }
     }
 }
