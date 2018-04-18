@@ -25,5 +25,7 @@ namespace Exline.Framework.Data
             return name; 
         }
         public abstract Task DropAsync();
+        public abstract Task<bool> ExistsAsync<TDocument>(string collectionName=null)
+            where TDocument:IDocument;
     }
 }

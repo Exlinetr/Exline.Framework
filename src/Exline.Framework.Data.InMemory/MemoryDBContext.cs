@@ -19,6 +19,11 @@ namespace Exline.Framework.Data.InMemory
             _database.Drop();
         }
 
+        public override async Task<bool> ExistsAsync<TDocument>(string collectionName=null)
+        {
+            return _database.Exists<TDocument>(collectionName);
+        }
+
         public IList<TDocument> GetCollection<TDocument, TPrimaryKey>()
             where TDocument:class,IDocument<TPrimaryKey>
         {

@@ -29,6 +29,17 @@ namespace Exline.Framework.Data.MongoDB
             await Client.DropDatabaseAsync(_contextConfig.DatabaseName);
         }
 
+        public override async Task<bool> ExistsAsync<TDocument>(string collectionName = null)
+        {
+            if(Database is null)
+                throw new NullReferenceException(nameof(Database));
+            return (await Database.ListCollectionsAsync(new ListCollectionsOptions(){
+                // Filter=new System.Collections.Generic.Dictionary<string,string>(){
+                //     {"",""}
+                // }
+            })).Any();   
+        }
+
         public IMongoCollection<TDocument> GetCollection<TDocument,TPrimaryKey>(string collectionName=null)
             where TDocument:class,IDocument<TPrimaryKey>
         {

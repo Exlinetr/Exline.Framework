@@ -34,5 +34,11 @@ namespace Exline.Framework.Data.InMemory
             _tables.Clear();
         }
 
+        public bool Exists<TDocument>(string collectionName=null)
+            where TDocument:IDocument
+        {
+            return _tables.ContainsKey(typeof(TDocument));
+        }
+
     }
 }
