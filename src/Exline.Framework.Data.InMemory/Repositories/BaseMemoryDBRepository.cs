@@ -32,7 +32,7 @@ namespace Exline.Framework.Data.InMemory.Repositories
         public virtual async Task<TDocument> AddOneAsync(TDocument model)
         {
             DBContext
-                .GetCollection<TDocument,TPrimaryKey>()
+                .GetCollection<TDocument>()
                 .Add(model);
            return model;
         }
@@ -45,7 +45,7 @@ namespace Exline.Framework.Data.InMemory.Repositories
         {
             await DeleteByIdAsync(model.Id);
             DBContext
-                .GetCollection<TDocument,TPrimaryKey>()
+                .GetCollection<TDocument>()
                 .Add(model);
             return true;
         }
@@ -54,16 +54,16 @@ namespace Exline.Framework.Data.InMemory.Repositories
 
         public virtual async Task<int> DeleteAsync(TDocument model)
         {
-            int index=DBContext.GetCollection<TDocument,TPrimaryKey>()
+            int index=DBContext.GetCollection<TDocument>()
                 .IndexOf(model);
-            DBContext.GetCollection<TDocument,TPrimaryKey>()
+            DBContext.GetCollection<TDocument>()
                 .RemoveAt(index);
             return 1;
         }
         
         public virtual async Task<int> DeleteByIdAsync(TPrimaryKey id)
         {
-            TDocument document=DBContext.GetCollection<TDocument,TPrimaryKey>().Single(x=>x.Id.ToString()==id.ToString());
+            TDocument document=DBContext.GetCollection<TDocument>().Single(x=>x.Id.ToString()==id.ToString());
             if(document!=null){
                  return await DeleteAsync(document);
             }
@@ -73,32 +73,32 @@ namespace Exline.Framework.Data.InMemory.Repositories
 
         public virtual async Task<bool> ExistsAsync(Expression<Func<TDocument, bool>> predicate)
         {
-            return DBContext.GetCollection<TDocument,TPrimaryKey>()
+            return DBContext.GetCollection<TDocument>()
                 .AsQueryable()
                 .Any(predicate);
         }
         public virtual async Task<int> CountAsync()
         {
-            return DBContext.GetCollection<TDocument,TPrimaryKey>()
+            return DBContext.GetCollection<TDocument>()
                 .AsQueryable()
                 .Count();
         }
         public virtual async Task<int> CountAsync(Expression<Func<TDocument, bool>> predicate)
         {
-            return DBContext.GetCollection<TDocument,TPrimaryKey>()
+            return DBContext.GetCollection<TDocument>()
                 .AsQueryable()
                 .Count(predicate);
         }
         public virtual async  Task<TDocument> GetByIdAsync(TPrimaryKey id)
         {
-            return DBContext.GetCollection<TDocument,TPrimaryKey>()
+            return DBContext.GetCollection<TDocument>()
                 .AsQueryable()
                 .FirstOrDefault(x=>x.Id.ToString()==id.ToString());
         }
 
         public virtual async Task TruncateAsync()
         {
-            DBContext.GetCollection<TDocument,TPrimaryKey>()
+            DBContext.GetCollection<TDocument>()
                 .Clear();
         }
     }

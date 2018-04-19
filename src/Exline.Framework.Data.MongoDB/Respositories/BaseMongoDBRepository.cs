@@ -36,7 +36,7 @@ namespace Exline.Framework.Data.MongoDB.Repositories
         
         public virtual async Task<TDocument> AddOneAsync(TDocument model)
         {
-           await DBContext.GetCollection<TDocument,TPrimaryKey>()
+           await DBContext.GetCollection<TDocument>()
             .InsertOneAsync(model);
            return model;
         }
@@ -48,7 +48,7 @@ namespace Exline.Framework.Data.MongoDB.Repositories
         public virtual async Task<bool> UpdateOneAsync(TDocument model)
         {
             return (await DBContext
-                .GetCollection<TDocument,TPrimaryKey>()
+                .GetCollection<TDocument>()
                 .ReplaceOneAsync(x=>x.Id==model.Id,model)).ModifiedCount==1;
         }
 
@@ -57,7 +57,7 @@ namespace Exline.Framework.Data.MongoDB.Repositories
         public virtual async Task<int> DeleteAsync(TDocument model)
         {
             return int.Parse((await DBContext
-                .GetCollection<TDocument,TPrimaryKey>()
+                .GetCollection<TDocument>()
                 .DeleteManyAsync(x=>x.Id==model.Id)).DeletedCount.ToString());
         }
         
@@ -71,19 +71,19 @@ namespace Exline.Framework.Data.MongoDB.Repositories
 
         public virtual async Task<bool> ExistsAsync(Expression<Func<TDocument, bool>> predicate)
         {
-            return (await DBContext.GetCollection<TDocument,TPrimaryKey>()
+            return (await DBContext.GetCollection<TDocument>()
                 .AsQueryable()
                     .AnyAsync(predicate));
         }
         public virtual async Task<int> CountAsync()
         {
-            return (await DBContext.GetCollection<TDocument,TPrimaryKey>()
+            return (await DBContext.GetCollection<TDocument>()
                 .AsQueryable()
                 .CountAsync());
         }
         public virtual async Task<int> CountAsync(Expression<Func<TDocument, bool>> predicate)
         {
-            return (await DBContext.GetCollection<TDocument,TPrimaryKey>()
+            return (await DBContext.GetCollection<TDocument>()
                 .AsQueryable()
                 .CountAsync(predicate));
         }
@@ -92,7 +92,7 @@ namespace Exline.Framework.Data.MongoDB.Repositories
             var query = new global::MongoDB.Driver.FilterDefinitionBuilder<TDocument>()
                 .Eq(x=>x.Id,id);
             return await DBContext
-                .GetCollection<TDocument,TPrimaryKey>()
+                .GetCollection<TDocument>()
                 .FindAsync<TDocument>(query).Result.FirstOrDefaultAsync();
             
         }

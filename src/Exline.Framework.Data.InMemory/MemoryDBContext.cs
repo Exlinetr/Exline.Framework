@@ -24,9 +24,8 @@ namespace Exline.Framework.Data.InMemory
             return _database.Exists<TDocument>(collectionName);
         }
 
-        public IList<TDocument> GetCollection<TDocument, TPrimaryKey>()
-            where TDocument:class,IDocument<TPrimaryKey>
-        {
+        public IList<TDocument> GetCollection<TDocument>()
+            where TDocument:class,IDocument        {
             return _database.Set<TDocument>();
         }
     }

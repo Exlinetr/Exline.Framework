@@ -30,18 +30,16 @@ namespace Exline.Framework.Data.MongoDB
         }
 
         public override async Task<bool> ExistsAsync<TDocument>(string collectionName = null)
+            //where TDocument:class,IDocument
         {
             if(Database is null)
                 throw new NullReferenceException(nameof(Database));
-            return (await Database.ListCollectionsAsync(new ListCollectionsOptions(){
-                // Filter=new System.Collections.Generic.Dictionary<string,string>(){
-                //     {"",""}
-                // }
-            })).Any();   
+            // (GetCollection<TDocument>(collectionName).Exists());
+            return true; 
         }
 
-        public IMongoCollection<TDocument> GetCollection<TDocument,TPrimaryKey>(string collectionName=null)
-            where TDocument:class,IDocument<TPrimaryKey>
+        public IMongoCollection<TDocument> GetCollection<TDocument>(string collectionName=null)
+            where TDocument:class,IDocument
         {
             if(Database is null)
                 throw new NullReferenceException(nameof(Database));
