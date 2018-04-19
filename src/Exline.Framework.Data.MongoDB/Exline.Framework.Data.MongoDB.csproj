@@ -1,6 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Exline.Framework.Data.MongoDB</PackageId>
+    <Version>1.0.0-preview</Version>
+    <Authors>Muhammet Furkan DOĞAN</Authors>
+    <Company>exlinetr</Company>
+    <Title>Exline.Framework.Data.MongoDB</Title>
+    <Copyright>Copyright (c) 2018 exlinetr</Copyright>
+    <PackageLicenseUrl>https://github.com/Exlinetr/Exline.Framework/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Exlinetr/Exline.Framework</PackageProjectUrl>
+    <PackageTags>framework,application,mongodb,mongodb orm,mongodb repository</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
