@@ -6,6 +6,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Exline.Framework.Data.Repositories;
+using System.Collections.Generic;
 
 namespace Exline.Framework.Data.MongoDB.Repositories
 {
@@ -22,7 +23,7 @@ namespace Exline.Framework.Data.MongoDB.Repositories
     }
 
     public abstract class BaseMongoDBRepository<TDocument,TPrimaryKey,Context>
-        : IRepository<TDocument,TPrimaryKey> 
+        : IMongoDBRepository<TDocument,TPrimaryKey> 
             where TDocument : class , IDocument<TPrimaryKey>, new()
             where TPrimaryKey : class
             where Context: IMongoDBContext
@@ -93,13 +94,27 @@ namespace Exline.Framework.Data.MongoDB.Repositories
                 .Eq(x=>x.Id,id);
             return await DBContext
                 .GetCollection<TDocument>()
-                .FindAsync<TDocument>(query).Result.FirstOrDefaultAsync();
+                .AsQueryable()
+                .FirstOrDefaultAsync(x=>x.Id==id);
             
         }
 
         public virtual async Task TruncateAsync()
         {
-            await DBContext.Database.DropCollectionAsync(((BaseDBContext)DBContext).GetCollectionName(typeof(TDocument),null));
+            await DBContext.Database
+                .DropCollectionAsync(((BaseDBContext)DBContext).GetCollectionName(typeof(TDocument),null));
+        }
+
+        public virtual async Task<IEnumerable<TDocument>> WhereAsync(Expression<Func<TDocument, bool>> predicate)
+        {
+            return await DBContext.GetCollection<TDocument>()
+                .FindAsync(predicate).Result.ToListAsync();
+        }
+
+        public virtual async Task<TDocument> FirstAsync(Expression<Func<TDocument, bool>> predicate)
+        {
+            return await DBContext.GetCollection<TDocument>()
+                .FindAsync(predicate).Result.FirstOrDefaultAsync();
         }
     }
 }

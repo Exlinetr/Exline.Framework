@@ -11,7 +11,7 @@ namespace Exline.Framework.Data.InMemory.Repositories
     }
 
     public interface IMemoryDBRepository<TDocument>
-        : IRepository<TDocument>
+        : IMemoryDBRepository<TDocument,int>
         where TDocument:class, IDocument<int>, new()
     {
 

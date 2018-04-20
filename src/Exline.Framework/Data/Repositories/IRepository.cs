@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -22,6 +23,8 @@ namespace Exline.Framework.Data.Repositories
         Task<int> DeleteByIdAsync(TPrimaryKey id);
         Task<int> CountAsync();
         Task<int> CountAsync(Expression<Func<TDocument, bool>> predicate);
+        Task<IEnumerable<TDocument>> WhereAsync(Expression<Func<TDocument, bool>> predicate);
+        Task<TDocument> FirstAsync(Expression<Func<TDocument, bool>> predicate);
         Task<TDocument> GetByIdAsync(TPrimaryKey id);
         Task TruncateAsync();
     }

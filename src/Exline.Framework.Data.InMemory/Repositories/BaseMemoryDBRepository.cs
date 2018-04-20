@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -100,6 +101,18 @@ namespace Exline.Framework.Data.InMemory.Repositories
         {
             DBContext.GetCollection<TDocument>()
                 .Clear();
+        }
+
+        public virtual async Task<IEnumerable<TDocument>> WhereAsync(Expression<Func<TDocument, bool>> predicate)
+        {
+            return DBContext.GetCollection<TDocument>()
+                .AsQueryable().Where(predicate);
+        }
+
+        public virtual async Task<TDocument> FirstAsync(Expression<Func<TDocument, bool>> predicate)
+        {
+            return DBContext.GetCollection<TDocument>()
+                .FirstOrDefault();
         }
     }
 }
