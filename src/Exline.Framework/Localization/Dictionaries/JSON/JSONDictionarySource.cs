@@ -1,69 +1,70 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Exline.Framework.Localization.Dictionaries.JSON
 {
     public sealed class JSONDicrionarySource
-        : BaseDictionarySource, IDictionarySource
+        : BaseDictionarySource
     {
 
-        #region members
+        // #region members
+        // private readonly JSONDictionarySourceInfo _jsonDictionarySourceInfo;
+        // private readonly IJSONDictionaryReader _jsonDictionaryReader;
+        // #endregion
 
-        private readonly LanguageInfo _languageInfo;
-        private readonly JSONDictionarySourceInfo _jsonDictionarySourceInfo;
+        // public JSONDicrionarySource()
+        // {
 
-        #endregion
+        // }
+        // public JSONDicrionarySource(string path)
+        //     : this(new JSONDictionarySourceInfo(path))
+        // {
 
+        // }
 
-        public string this[string key] => GetStringEmpty(key);
+        // public JSONDicrionarySource(IDictionarySourceInfo info)
+        //     : this(new JSONDictionarySourceInfo(info))
+        // {
 
-        public LanguageInfo Language => _languageInfo;
+        // }
 
-        public IDictionarySourceInfo DictionarySourceInfo => _jsonDictionarySourceInfo;
+        // public JSONDicrionarySource(JSONDictionarySourceInfo info)
+        //     : this(info.Path, new JSONDictionaryReader())
+        // {
+        //     _jsonDictionarySourceInfo = info;
+        // }
 
-        public IReadOnlyList<DictionaryContent> GetAllStrings()
+        // public JSONDicrionarySource(string path, IJSONDictionaryReader jsondDictionaryReader)
+        //     : base(jsondDictionaryReader)
+        // {
+        //     _jsonDictionaryReader = jsondDictionaryReader;
+        // }
+
+        private JSONDicrionarySource(string defaultValue, LanguageInfo languageInfo, IList<DictionaryContent> contents)
+            : base(defaultValue, languageInfo, contents)
         {
-            return DictionaryContentCollection.ToList();
+
         }
 
-        public DictionaryContent GetDictionaryContent(string key)
+        private JSONDicrionarySource(JSONDictionaryFile file)
+            : this(file.DefaultValue, file.Language, file.Contents)
         {
-            return DictionaryContentCollection[key];
+
         }
 
-        public IEnumerator<DictionaryContent> GetEnumerator()
+
+        public static JSONDicrionarySource FromFile(string path)
         {
-            return DictionaryContentCollection.GetEnumerator();
+            return LoadJSON(File.ReadAllText(path));
         }
 
-        public string GetString(string key)
+        public static JSONDicrionarySource LoadJSON(string json)
         {
-            DictionaryContent dictionaryContent = GetDictionaryContent(key);
-            if (dictionaryContent == null)
-                return null;
-            return dictionaryContent.Value;
+            JSONDictionaryFile dictionaryFile = Newtonsoft.Json.JsonConvert.DeserializeObject<JSONDictionaryFile>(json);
+            return new JSONDicrionarySource(dictionaryFile);
         }
 
-        public string GetStringEmpty(string key)
-        {
-            string content = GetString(key);
-            if (content == null)
-                return string.Empty;
-            return content;
-        }
-
-        public string GetStringOrDefault(string key)
-        {
-            string content=GetString(key);
-            if(content==null)
-                return _defaultValue;
-            return content;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return DictionaryContentCollection.GetEnumerator();
-        }
     }
 }
