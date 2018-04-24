@@ -1,19 +1,19 @@
 {
-    "name":"resource",
-    "defaultValue":"none",
-    "language":{
-        "name":"English",
-        "ıcon":"",
-        "acronym":"en-US"
+    "name": "resource",
+    "defaultValue": "none",
+    "language": {
+        "name": "English",
+        "ıcon": "",
+        "acronym": "en-US"
     },
-    "contents":[
+    "contents": [
         {
-            "key":"$hello",
-            "val":"Hello"
+            "key": "$hello",
+            "val": "Hello"
         },
         {
-            "key":"$task",
-            "val":"Task"
+            "key": "$task",
+            "val": "Task"
         }
     ]
 }

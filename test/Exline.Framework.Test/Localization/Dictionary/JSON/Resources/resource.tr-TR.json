@@ -1,19 +1,20 @@
 {
-    "name":"resource",
-    "defaultValue":"geçersiz",
-    "language":{
-        "name":"Turkish",
-        "icon":"",
-        "acronym":"tr-TR"
+    "name": "resource",
+    "defaultValue": "geçersiz",
+    "language": {
+        "name": "Turkish",
+        "icon": "",
+        "acronym": "tr-TR",
+        "isDefault": true
     },
-    "contents":[
+    "contents": [
         {
-            "key":"$hello",
-            "val":"Merhaba"
+            "key": "$hello",
+            "val": "Merhaba"
         },
         {
-            "key":"$task",
-            "val":"Görev"
+            "key": "$task",
+            "val": "Görev"
         }
     ]
 }
