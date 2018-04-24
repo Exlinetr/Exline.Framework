@@ -4,6 +4,7 @@ namespace Exline.Framework.Localization.Dictionaries
 {
     public class LanguageInfo
     {
+        public static LanguageInfo Current { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public string Icon { get; set; }
