@@ -1,0 +1,20 @@
+{
+    "name": "resource",
+    "defaultValue": "geçersiz",
+    "language": {
+        "name": "Turkish",
+        "icon": "",
+        "acronym": "tr-TR",
+        "isDefault": true
+    },
+    "contents": [
+        {
+            "key": "$hello",
+            "val": "Merhaba"
+        },
+        {
+            "key": "$task",
+            "val": "Görev"
+        }
+    ]
+}
