@@ -9,7 +9,7 @@ namespace Exline.Framework.Localization.Helpers
     internal class RouteRequestCultureProvider
         : Microsoft.AspNetCore.Localization.RequestCultureProvider
     {
-        private static readonly string _preferix = "language";
+        private static readonly string _prefix = "language";
         // private static readonly string _uıCulturePreferix = "";
         public RouteRequestCultureProvider()
         {
@@ -22,7 +22,7 @@ namespace Exline.Framework.Localization.Helpers
             {
                 return null;
             }
-            string culture = httpContext.GetRouteValue(_preferix).ToString();
+            string culture = httpContext.GetRouteValue(_prefix).ToString();
             if (!string.IsNullOrEmpty(culture))
                 return new ProviderCultureResult(culture, culture);
 
