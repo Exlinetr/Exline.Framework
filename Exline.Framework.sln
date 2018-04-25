@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exline.Framework.Data.Mongo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exline.Framework.Test", "test\Exline.Framework.Test\Exline.Framework.Test.csproj", "{E8867F20-0507-4946-BC0B-98D3A5A7CAAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exline.Framework.Data.Sql", "src\Exline.Framework.Data.Sql\Exline.Framework.Data.Sql.csproj", "{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,18 @@ Global
 		{E8867F20-0507-4946-BC0B-98D3A5A7CAAD}.Release|x64.Build.0 = Release|x64
 		{E8867F20-0507-4946-BC0B-98D3A5A7CAAD}.Release|x86.ActiveCfg = Release|x86
 		{E8867F20-0507-4946-BC0B-98D3A5A7CAAD}.Release|x86.Build.0 = Release|x86
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Debug|x64.ActiveCfg = Debug|x64
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Debug|x64.Build.0 = Debug|x64
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Debug|x86.ActiveCfg = Debug|x86
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Debug|x86.Build.0 = Debug|x86
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Release|x64.ActiveCfg = Release|x64
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Release|x64.Build.0 = Release|x64
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Release|x86.ActiveCfg = Release|x86
+		{40356509-E17D-4EC9-B46C-7BD16C5A3E2B}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{043ADE50-C193-466F-A9CA-C7AC00FD831A} = {C6675046-DC1A-4990-870D-D61FB6B30B01}
