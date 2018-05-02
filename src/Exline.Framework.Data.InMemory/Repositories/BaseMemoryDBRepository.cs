@@ -5,6 +5,16 @@ using System.Threading.Tasks;
 
 namespace Exline.Framework.Data.InMemory.Repositories
 {
+    public abstract class BaseMemoryDBRepository<TDocument>
+        : BaseMemoryDBRepository<TDocument, int, MemoryDBContext>
+            where TDocument : class , IDocument<int>, new()
+    {
+        public BaseMemoryDBRepository(IMemoryDBContext dbContext) 
+            : base(dbContext)
+        {
+
+        }
+    }
       public abstract class BaseMemoryDBRepository<TDocument, Context>
         : BaseMemoryDBRepository<TDocument, int, Context>
             where TDocument : class , IDocument<int>, new()

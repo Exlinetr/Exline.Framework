@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Exline.Framework\Exline.Framework.csproj" />
+    <ProjectReference Include="..\Exline.Framework.Data.Sql\Exline.Framework.Data.Sql.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- <PackageReference Include="Dapper.Contrib" Version="1.50.4" /> -->
+    <PackageReference Include="Dapper" Version="1.50.4" />
+    <PackageReference Include="Dapper.Contrib" Version="1.50.4" />
+    <PackageReference Include="Dapper.Extensions.Linq" Version="1.1.17" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Exline.Framework.Data.Sql.Dapper</PackageId>
+    <Version>1.0.0-preview</Version>
+    <Authors>Muhammet Furkan DOĞAN</Authors>
+    <Company>exlinetr</Company>
+    <Title>Exline.Framework.Data.Sql.Dapper</Title>
+    <Copyright>Copyright (c) 2018 exlinetr</Copyright>
+    <PackageLicenseUrl>https://github.com/Exlinetr/Exline.Framework/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Exlinetr/Exline.Framework</PackageProjectUrl>
+    <PackageTags>framework,application,sql,sql orm,sql repository,sql database,sqldb,orm,orm tool</PackageTags>
+  </PropertyGroup>
+
+</Project>
