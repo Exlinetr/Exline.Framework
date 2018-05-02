@@ -5,7 +5,7 @@ namespace Exline.Framework.Data.MongoDB.Test
     public class CategoryRepository
         : BaseMongoDBRepository<CategoryDocument, MongoDBContext>, ICategoryRepository
     {
-        public CategoryRepository(IMongoDBContext dbContext) 
+        public CategoryRepository(MongoDBContext dbContext) 
             : base(dbContext)
         {
             
