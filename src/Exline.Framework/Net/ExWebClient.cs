@@ -14,7 +14,7 @@ namespace Exline.Framework.Net
 
         }
 
-        public async Task<TObject> DownloadAsync<TObject>(Uri uri, ITextSerializer textSerializer)
+        public async Task<TObject> DownloadAsync<TObject>(string uri, ITextSerializer textSerializer)
         {
             return textSerializer.Desrialize<TObject>(await this.DownloadStringTaskAsync(uri));
         }
