@@ -10,13 +10,13 @@ namespace Exline.Framework.Authorization.Facebook
         }
 
         public FacebookAuthorizationConfig(string appId, string secretKey)
-            : base()
+            : this()
         {
             this.AppId = appId;
             this.SecretKey = secretKey;
         }
-        public string ApiHost { get; set; }
-        public string ApiVersion { get; set; }
+        internal string ApiHost { get; set; }
+        internal string ApiVersion { get; set; }
         public string AppId { get; set; }
         public string SecretKey { get; set; }
     }
