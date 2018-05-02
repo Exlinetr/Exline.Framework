@@ -7,8 +7,8 @@ namespace Exline.Framework.Localization.Helpers
     internal class HeaderRequestCultureProvider
         : Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider
     {
-        private static readonly string _preferix = "Accept-Language";
-        private static readonly string _uiCulturePreferix = "";
+        private static readonly string _prefix = "Accept-Language";
+        private static readonly string _uiCulturePrerix = "";
         public HeaderRequestCultureProvider()
         {
         }
@@ -19,8 +19,8 @@ namespace Exline.Framework.Localization.Helpers
             {
                 return null;
             }
-            string culture = httpContext.Request.Headers[_preferix].ToString();
-            string uiCulture = httpContext.Request.Headers[_uiCulturePreferix].ToString();
+            string culture = httpContext.Request.Headers[_prefix].ToString();
+            string uiCulture = httpContext.Request.Headers[_uiCulturePrerix].ToString();
             
             if (!string.IsNullOrEmpty(uiCulture) && !string.IsNullOrEmpty(culture))
                 return new ProviderCultureResult(culture, uiCulture);

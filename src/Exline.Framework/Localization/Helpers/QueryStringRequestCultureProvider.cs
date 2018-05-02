@@ -8,8 +8,8 @@ namespace Exline.Framework.Localization.Helpers
     internal class QueryStringRequestCultureProvider
         : Microsoft.AspNetCore.Localization.QueryStringRequestCultureProvider
     {
-        private static readonly string _preferix = "language";
-        private static readonly string _uıCulturePreferix = "ui-language";
+        private static readonly string _prefix = "language";
+        private static readonly string _uiCulturePrefix = "ui-language";
         public QueryStringRequestCultureProvider()
         {
 
@@ -23,8 +23,8 @@ namespace Exline.Framework.Localization.Helpers
             }
             StringValues culture = StringValues.Empty;
             StringValues uiCulture = StringValues.Empty;
-            httpContext.Request.Query.TryGetValue(_preferix, out culture);
-            httpContext.Request.Query.TryGetValue(_preferix, out culture);
+            httpContext.Request.Query.TryGetValue(_prefix, out culture);
+            httpContext.Request.Query.TryGetValue(_uiCulturePrefix, out uiCulture);
 
             if (!string.IsNullOrEmpty(uiCulture) && !string.IsNullOrEmpty(culture))
                 return new ProviderCultureResult(culture.ToString(), uiCulture.ToString());
