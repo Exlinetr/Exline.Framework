@@ -7,5 +7,8 @@ namespace Exline.Framework.Data.Sql.Dapper
     {
         IDbTransaction DbTransaction { get; }
         IDbConnection DbConnection { get; }
+        void Open();
+        void OpenTranscation();
+        void CommitTranscation();
     }
 }

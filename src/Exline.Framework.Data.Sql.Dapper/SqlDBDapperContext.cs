@@ -9,7 +9,7 @@ namespace Exline.Framework.Data.Sql.Dapper
        : BaseDBContext, ISqlDBDapperContext
     {
         private readonly IDbConnection _dbConnection;
-        private readonly IDbTransaction _dbTransaction;
+        private IDbTransaction _dbTransaction;
         private readonly ISqlDBContextConfig _contextConfig;
         public SqlDBDapperContext(ISqlDBContextConfig contextConfig)
         {
@@ -26,6 +26,11 @@ namespace Exline.Framework.Data.Sql.Dapper
 
         public IDbConnection DbConnection => _dbConnection;
 
+        public void CommitTranscation()
+        {
+            DbTransaction.Commit();
+        }
+
         public override void Dispose()
         {
             if(DbConnection!=null)
@@ -41,6 +46,16 @@ namespace Exline.Framework.Data.Sql.Dapper
         public override async Task DropAsync()
         {
             
+        }
+
+        public void Open()
+        {
+            DbConnection.Open();
+        }
+
+        public void OpenTranscation()
+        {
+            _dbTransaction=DbConnection.BeginTransaction();
         }
     }
 }
