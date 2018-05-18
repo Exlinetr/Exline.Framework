@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Exline.Framework.Data.Sql.Dapper
 {
-    public sealed class SqlDBDapperContext
+    public class SqlDBDapperContext
        : BaseDBContext, ISqlDBDapperContext
     {
         private readonly IDbConnection _dbConnection;
-        private readonly IDbTransaction _dbTransaction;
+        private IDbTransaction _dbTransaction;
         private readonly ISqlDBContextConfig _contextConfig;
         public SqlDBDapperContext(ISqlDBContextConfig contextConfig)
         {
@@ -18,17 +18,44 @@ namespace Exline.Framework.Data.Sql.Dapper
 
             _contextConfig = contextConfig;
             _dbConnection = new SqlConnection(_contextConfig.ToConnectionString());
-            _dbConnection.Open();
-            _dbTransaction = _dbConnection.BeginTransaction();
+            // _dbConnection.Open();
+            // _dbTransaction = _dbConnection.BeginTransaction();
         }
 
         public IDbTransaction DbTransaction => _dbTransaction;
 
         public IDbConnection DbConnection => _dbConnection;
 
+        public void CommitTranscation()
+        {
+            DbTransaction.Commit();
+        }
+
+        public override void Dispose()
+        {
+            if(DbConnection!=null)
+            {
+                if(DbConnection.State==ConnectionState.Open)
+                    DbConnection.Close();
+                DbConnection.Dispose();
+            }
+            if(DbTransaction!=null)
+                DbTransaction.Dispose();
+        }
+
         public override async Task DropAsync()
         {
             
+        }
+
+        public void Open()
+        {
+            DbConnection.Open();
+        }
+
+        public void OpenTranscation()
+        {
+            _dbTransaction=DbConnection.BeginTransaction();
         }
     }
 }

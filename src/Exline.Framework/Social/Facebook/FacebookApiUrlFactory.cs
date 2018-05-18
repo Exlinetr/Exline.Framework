@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System;
+using System.Linq;
 
 namespace Exline.Framework.Social.Facebook
 {
@@ -31,14 +32,9 @@ namespace Exline.Framework.Social.Facebook
             return $"{FacebookApiConfig.ApiHost}/{FacebookApiConfig.ApiVersion}";
         }
 
-        private StringBuilder CreateScops(IEnumerable<string> scops)
+        private string CreateScops(IEnumerable<string> scops)
         {
-            StringBuilder scopBuilder = new StringBuilder();
-            foreach (string scop in scops)
-            {
-                scopBuilder.Append($"{scop},");
-            }
-            return scopBuilder;
+           return string.Join(",",scops);
         }
     }
 }

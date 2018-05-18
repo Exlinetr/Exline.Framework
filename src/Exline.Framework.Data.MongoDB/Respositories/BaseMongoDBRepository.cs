@@ -33,21 +33,37 @@ namespace Exline.Framework.Data.MongoDB.Repositories
     }
 
     public abstract class BaseMongoDBRepository<TDocument, TPrimaryKey, Context>
-        : IRepository<TDocument, TPrimaryKey>
+        : IMongoDBRepository<TDocument, TPrimaryKey>
             where TDocument : class, IDocument<TPrimaryKey>, new()
             where TPrimaryKey : class
             where Context : IMongoDBContext
     {
+        private readonly IMongoCollection<TDocument> _collection;
         protected Context DBContext { get; private set; }
+
+        public IMongoCollection<TDocument> Collection
+        {
+            get
+            {
+                return _collection;
+            }
+        }
+
         public BaseMongoDBRepository(Context dbContext)
+            : this()
         {
             DBContext = dbContext;
+            _collection = dbContext.GetCollection<TDocument>();
+        }
+
+        public BaseMongoDBRepository()
+        {
         }
         #region insert
 
         public virtual async Task<TDocument> AddOneAsync(TDocument model)
         {
-            await DBContext.GetCollection<TDocument, TPrimaryKey>()
+            await Collection
              .InsertOneAsync(model);
             return model;
         }
@@ -58,8 +74,7 @@ namespace Exline.Framework.Data.MongoDB.Repositories
 
         public virtual async Task<bool> UpdateOneAsync(TDocument model)
         {
-            return (await DBContext
-                .GetCollection<TDocument, TPrimaryKey>()
+            return (await Collection
                 .ReplaceOneAsync(x => x.Id == model.Id, model)).ModifiedCount == 1;
         }
 
@@ -67,8 +82,7 @@ namespace Exline.Framework.Data.MongoDB.Repositories
 
         public virtual async Task<int> DeleteAsync(TDocument model)
         {
-            return int.Parse((await DBContext
-                .GetCollection<TDocument, TPrimaryKey>()
+            return int.Parse((await Collection
                 .DeleteManyAsync(x => x.Id == model.Id)).DeletedCount.ToString());
         }
 
@@ -83,19 +97,19 @@ namespace Exline.Framework.Data.MongoDB.Repositories
 
         public virtual async Task<bool> ExistsAsync(Expression<Func<TDocument, bool>> predicate)
         {
-            return (await DBContext.GetCollection<TDocument, TPrimaryKey>()
+            return (await Collection
                 .AsQueryable()
                     .AnyAsync(predicate));
         }
         public virtual async Task<int> CountAsync()
         {
-            return (await DBContext.GetCollection<TDocument, TPrimaryKey>()
+            return (await Collection
                 .AsQueryable()
                 .CountAsync());
         }
         public virtual async Task<int> CountAsync(Expression<Func<TDocument, bool>> predicate)
         {
-            return (await DBContext.GetCollection<TDocument, TPrimaryKey>()
+            return (await Collection
                 .AsQueryable()
                 .CountAsync(predicate));
         }
@@ -103,8 +117,7 @@ namespace Exline.Framework.Data.MongoDB.Repositories
         {
             var query = new global::MongoDB.Driver.FilterDefinitionBuilder<TDocument>()
                 .Eq(x => x.Id, id);
-            return await DBContext
-                .GetCollection<TDocument, TPrimaryKey>()
+            return await Collection
                 .FindAsync<TDocument>(query).Result.FirstOrDefaultAsync();
 
         }

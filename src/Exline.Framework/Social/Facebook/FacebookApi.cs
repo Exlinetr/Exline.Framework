@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Exline.Framework.Net;
 using Exline.Framework.Serialization;
 using Exline.Framework.Serialization.JSON;
 
@@ -26,11 +29,22 @@ namespace Exline.Framework.Social.Facebook
 
         public async Task<SocailAccount> GetAccountAsync(string accessToken, IEnumerable<string> scops)
         {
-            Models.Api.MeResponseModel me = await WebClient.DownloadAsync<Models.Api.MeResponseModel>(_urlFactory.Me(accessToken, scops), _serializer);
-            SocailAccount account = new SocailAccount();
-            return account;
+            using (ExHttpClient httpClient = ExHttpClient.Create())
+            {
+                using (HttpResponseMessage responseMessage = await httpClient.GetAsync(_urlFactory.Me(accessToken, scops)))
+                {
+                    if (responseMessage.StatusCode == HttpStatusCode.OK)
+                    {
+                        return new SocailAccount((await responseMessage.Content.ReadAsStringAsync()).ToObject<Models.Api.MeResponseModel>());
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
         }
-        
+
         public override void Dispose()
         {
             base.Dispose();

@@ -1,9 +1,9 @@
-namespace Exline.Framework.Social
+namespace Exline.Framework.Social.Facebook
 {
     public class FacebookApiConfig
             : IApiConfig
     {
-        public const string ApiHost = "https://graph.facebook.com/";
+        public const string ApiHost = "https://graph.facebook.com";
         public const string ApiVersion = "v3.0";
         public FacebookApiConfig()
         {

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Exline.Framework.Social
 {
-    public interface ISocailApi
+    public interface ISocialApi
         : IDisposable
     {
         Task<SocailAccount> GetAccountAsync(string accessToken,IEnumerable<string> scops);

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace Exline.Framework.Data.InMemory
 {
     internal class MemoryDatabase
+        : IDisposable
     {
 
         private readonly IDictionary<Type,IList> _tables;
@@ -34,5 +35,9 @@ namespace Exline.Framework.Data.InMemory
             _tables.Clear();
         }
 
+        public void Dispose()
+        {
+            // _tables=null;                
+        }
     }
 }

@@ -9,8 +9,8 @@ namespace Exline.Framework.Data.MongoDB
         IMongoClient Client{get;}
         IMongoDatabase Database{get;}
 
-        IMongoCollection<TDocument> GetCollection<TDocument,TPrimaryKey>(string collectionName=null) 
-             where TDocument:class,IDocument<TPrimaryKey>;
+        IMongoCollection<TDocument> GetCollection<TDocument>(string collectionName=null) 
+             where TDocument:class,IDocument;
 
     }
 }
