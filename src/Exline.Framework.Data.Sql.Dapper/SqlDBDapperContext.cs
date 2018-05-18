@@ -18,8 +18,8 @@ namespace Exline.Framework.Data.Sql.Dapper
 
             _contextConfig = contextConfig;
             _dbConnection = new SqlConnection(_contextConfig.ToConnectionString());
-            _dbConnection.Open();
-            _dbTransaction = _dbConnection.BeginTransaction();
+            // _dbConnection.Open();
+            // _dbTransaction = _dbConnection.BeginTransaction();
         }
 
         public IDbTransaction DbTransaction => _dbTransaction;
