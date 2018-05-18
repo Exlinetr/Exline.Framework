@@ -14,6 +14,12 @@ namespace Exline.Framework.Data.InMemory
             _database=new MemoryDatabase();
         }
 
+        public override void Dispose()
+        {
+            if(_database!=null)
+                _database.Dispose();
+        }
+
         public override async Task DropAsync()
         {
             _database.Drop();

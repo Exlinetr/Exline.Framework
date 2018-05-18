@@ -7,19 +7,18 @@ namespace Exline.Framework.Social
     public abstract class BaseSocialApi
         : IDisposable
     {
-        protected ExWebClient WebClient { get; }
+        // protected ExHttpClient HttpClient { get; }
 
         public BaseSocialApi()
         {
-            WebClient = new ExWebClient();
         }
 
         public virtual void Dispose()
         {
-            if (WebClient != null)
-            {
-                WebClient.Dispose();
-            }
+            // if (HttpClient != null)
+            // {
+            //     HttpClient.Dispose();
+            // }
         }
     }
 }

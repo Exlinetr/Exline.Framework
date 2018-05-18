@@ -10,6 +10,10 @@ namespace Exline.Framework.Data.Sql
             
         }
 
+        public override void Dispose()
+        {
+        }
+
         public override Task DropAsync()
         {
             throw new System.NotImplementedException();

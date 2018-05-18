@@ -6,10 +6,6 @@ using Dapper;
 using Exline.Framework;
 using Exline.Framework.Data;
 using Dapper.Contrib.Extensions;
-using Dapper.Extensions;
-using Dapper.Extensions.Linq;
-using Dapper.Extensions.Linq.Builder;
-using Dapper.Extensions.Linq.Extensions;
 
 namespace Exline.Framework.Data.Sql.Dapper.Repositories
 {

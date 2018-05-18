@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Exline.Framework.Data.Sql.Dapper
 {
-    public sealed class SqlDBDapperContext
+    public class SqlDBDapperContext
        : BaseDBContext, ISqlDBDapperContext
     {
         private readonly IDbConnection _dbConnection;
@@ -25,6 +25,18 @@ namespace Exline.Framework.Data.Sql.Dapper
         public IDbTransaction DbTransaction => _dbTransaction;
 
         public IDbConnection DbConnection => _dbConnection;
+
+        public override void Dispose()
+        {
+            if(DbConnection!=null)
+            {
+                if(DbConnection.State==ConnectionState.Open)
+                    DbConnection.Close();
+                DbConnection.Dispose();
+            }
+            if(DbTransaction!=null)
+                DbTransaction.Dispose();
+        }
 
         public override async Task DropAsync()
         {
